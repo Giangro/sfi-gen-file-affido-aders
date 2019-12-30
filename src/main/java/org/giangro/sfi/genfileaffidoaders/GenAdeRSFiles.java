@@ -7,12 +7,9 @@ package org.giangro.sfi.genfileaffidoaders;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import java.io.File;
 import org.springframework.beans.factory.annotation.Value;
 
-@Service
-class GenAdeRSFiles {
+public abstract class GenAdeRSFiles {
 
   final static Logger logger
     = LoggerFactory.getLogger(GenAdeRSFiles.class);
@@ -24,13 +21,7 @@ class GenAdeRSFiles {
   public GenAdeRSFiles() {  
   } // public method
 
-  public void generate() {
-    try {
-    }   // try
-    catch (Exception ex) {
-      logger.error(ex.getLocalizedMessage());
-    }   // catch
-  }
+  public abstract void generate() throws Exception; 
   
   @Value("${template_path}")
   private String templatePath;

@@ -66,6 +66,6 @@ public class App {
   private String destinationPath;
 
   @Autowired
-  private GenAdeRSFiles genAderRSFiles;
+  private GenAdeRSFilesDescritta genAderRSFilesDescritta;
 
 } // class App
