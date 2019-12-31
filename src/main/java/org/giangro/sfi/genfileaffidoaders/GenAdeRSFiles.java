@@ -21,12 +21,6 @@ public abstract class GenAdeRSFiles {
   public GenAdeRSFiles() {  
   } // public method
 
-  public abstract void generate() throws Exception; 
-  
-  @Value("${template_path}")
-  private String templatePath;
-  
-  @Value("${destination_path}")
-  private String destinationPath;
+  public abstract void generate() throws Exception;    
   
 } // class GenAdeRSFiles
