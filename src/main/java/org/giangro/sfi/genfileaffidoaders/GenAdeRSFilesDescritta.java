@@ -6,7 +6,6 @@
 package org.giangro.sfi.genfileaffidoaders;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
-import static org.giangro.sfi.genfileaffidoaders.App.logger;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -103,7 +101,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         logger.info("creating new file \"" + newfilename + "\"");
 
         try {
-            br = new BufferedReader(new FileReader(templateFile));
+            br = new BufferedReader(new FileReader(templateFileDescr));
             pw = new PrintWriter(new FileWriter(destinationPath + newfilename));
 
             String line;
@@ -182,7 +180,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         line_00C = StringUtils.overlay(line_00C, codAder, 3, 8);
         //line_00C = StringUtils.overlay(line_00C, "****", 8,12);        
         line_00C = StringUtils.overlay(line_00C, getCurrentDate(DEFAULT_DATE_PATTERN), 12, 20);
-        line_00C = StringUtils.overlay(line_00C, idFlusso, 20, 28);
+        line_00C = StringUtils.overlay(line_00C, idFlussoDescr, 20, 28);
         line_00C = StringUtils.overlay(line_00C, codForn, 28, 33);
         line_00C = StringUtils.overlay(line_00C, "0", 28, 29); // patch to be eliminated in the future
         pw.println(line_00C);
@@ -282,7 +280,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         String codproglav = String.format("%06d", r.nextInt(1000000));        
         newfilename
                 .append(FILE_NAME_PRE)
-                .append(idFlusso)
+                .append(idFlussoDescr)
                 .append(".M")
                 .append(codAder)
                 .append(".D")
@@ -302,10 +300,10 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         } // if
         else {
             logger.debug("max_num_values: " + maxNumValues.toString());
-            logger.debug("template file: \"" + templateFile + "\"");
+            logger.debug("template file: \"" + templateFileDescr + "\"");
             logger.debug("destination path: \"" + destinationPath + "\"");
             logger.debug("filler_char: \"" + fillerChar + "\"");
-            logger.debug("id_flusso: \"" + idFlusso + "\"");
+            logger.debug("id_flusso_descr: \"" + idFlussoDescr + "\"");
             logger.debug("cod_ader: \"" + codAder + "\"");
             logger.debug("cod_forn: \"" + codForn + "\"");
             //logger.debug("cod_prog_lav: \"" + codProgLav + "\"");
@@ -337,14 +335,14 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${max_num_values}")
     private Integer maxNumValues;
 
-    @Value("${template_file}")
-    private String templateFile;
+    @Value("${template_file_descr}")
+    private String templateFileDescr;
 
     @Value("${destination_path}")
     private String destinationPath;
 
-    @Value("${id_flusso}")
-    private String idFlusso;
+    @Value("${id_flusso_descr}")
+    private String idFlussoDescr;
 
     @Value("${cod_ader}")
     private String codAder;
