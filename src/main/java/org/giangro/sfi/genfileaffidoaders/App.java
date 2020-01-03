@@ -21,7 +21,7 @@ import java.io.File;
  */
 @ComponentScan(basePackages = "org.giangro.sfi")
 @Configuration
-@PropertySource("classpath:gen_adersfiles.properties")
+@PropertySource("classpath:gen_adersfiles_descr.properties")
 public class App {
 
   final static Logger logger
