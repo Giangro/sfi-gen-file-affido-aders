@@ -48,23 +48,19 @@ public class App {
   private void doStart() {
     logger.info("Starting ADERS File Generation Tool version "+this.version);   
     try {
-        logger.debug("template path: \""+this.templatePath+"\"");
-        logger.debug("destination path: \""+this.destinationPath+"\"");
+                
+        this.genAderRSFilesDescritta
+                .generate();
+        
     } // try
     catch (Exception ex) {
       logger.error(ex.getLocalizedMessage());
     } // catch
   }
-
+  
   @Value("${version}")
   private String version;
   
-  @Value("${template_path}")
-  private String templatePath;
-  
-  @Value("${destination_path}")
-  private String destinationPath;
-
   @Autowired
   private GenAdeRSFilesDescritta genAderRSFilesDescritta;
 
