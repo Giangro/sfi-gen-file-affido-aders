@@ -144,6 +144,7 @@
                     <exclude>**/conf/*</exclude>
                     <exclude>**/data/*</exclude>
                     <exclude>**/generated/*</exclude>
+                    <exclude>**/run.bat</exclude>
                 </excludes>
             </resource>
         </resources>
