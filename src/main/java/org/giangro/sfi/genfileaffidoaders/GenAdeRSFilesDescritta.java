@@ -212,7 +212,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     private void write_DPD(PrintWriter pw, String line) {
         String line_DPD = line;
         
-        String progressivorecorddpd = String.format("%07d", counterRaccomandate);
+        String progressivorecorddpd = String.format("%07d", counterRaccomandate+1);
         line_DPD = StringUtils.overlay(line_DPD, progressivorecorddpd, 3, 10);
         String nextraccomandataiddpd = String.format("%012d", nextRaccomandataId);
         line_DPD = StringUtils.overlay(line_DPD, nextraccomandataiddpd , 10, 22);
@@ -228,7 +228,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     private void write_DPC(PrintWriter pw, String line) {
         String line_DPC = line;
         
-        String progressivorecorddpc = String.format("%07d", counterRaccomandate+1);
+        String progressivorecorddpc = String.format("%07d", counterRaccomandate+2);
         line_DPC = StringUtils.overlay(line_DPC, progressivorecorddpc, 3, 10);
         line_DPC = StringUtils.overlay(line_DPC, codAmbitoArr[randomNumber], 10, 13);
         progressivorecorddpc = String.format("%08d", counterRaccomandate+2);
