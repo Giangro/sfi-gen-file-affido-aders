@@ -6,7 +6,6 @@
 package org.giangro.sfi.genfileaffidoaders;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -18,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
-import static org.giangro.sfi.genfileaffidoaders.App.logger;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -49,9 +47,9 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @PostConstruct
     void init() {
         codAmbitoArr
-                = splitElem(codAmbito);
+                = splitElem(codAmbitoDescr);
         tipoModelloArr
-                = splitElem(tipoModello);
+                = splitElem(tipoModelloDescr);
         codiceClienteArr
                 = splitElem(codiceCliente);
         codiceCapArr
@@ -69,7 +67,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         indirizzoDestinatarioArr
                 = splitElem(indirizzoDestinatario);
         dataCreazioneFileArr
-                = splitElem(dataCreazioneFile);
+                = splitElem(dataCreazioneFileDescr);
         numeroRiferimentoDPTArr
                 = splitElem(numeroRiferimentoDPT);
 
@@ -103,7 +101,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         logger.info("creating new file \"" + newfilename + "\"");
 
         try {
-            br = new BufferedReader(new FileReader(templateFile));
+            br = new BufferedReader(new FileReader(templateFileDescr));
             pw = new PrintWriter(new FileWriter(destinationPath + newfilename));
 
             String line;
@@ -140,15 +138,15 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             } // while
 
             Random r = new Random();
-            nextRaccomandataId = 0;
+            nextRaccomandataId = startRaccomandata;
                         
             write_00C(pw, line00C);            
 
-            for (int i = 0; i < nFlussiLogici; i++) {
+            for (int i = 0; i < nFlussiLogiciDescr; i++) {
                 // incremente counter progressivo DPT 
                 counterProgressivoDPT++;      
                 // genera randomicamente codice ambito, tipo modello, ecc..
-                randomNumber = r.nextInt(maxNumValues);
+                randomNumber = r.nextInt(maxNumValuesDescr);
                 write_DPT(pw, lineDPT);
                 counterRaccomandate=0;
                 for (int j = 0; j < nRaccomandate; j++ ) {
@@ -182,7 +180,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         line_00C = StringUtils.overlay(line_00C, codAder, 3, 8);
         //line_00C = StringUtils.overlay(line_00C, "****", 8,12);        
         line_00C = StringUtils.overlay(line_00C, getCurrentDate(DEFAULT_DATE_PATTERN), 12, 20);
-        line_00C = StringUtils.overlay(line_00C, idFlusso, 20, 28);
+        line_00C = StringUtils.overlay(line_00C, idFlussoDescr, 20, 28);
         line_00C = StringUtils.overlay(line_00C, codForn, 28, 33);
         line_00C = StringUtils.overlay(line_00C, "0", 28, 29); // patch to be eliminated in the future
         pw.println(line_00C);
@@ -241,7 +239,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         String line_99C = line;
         
         line_99C = StringUtils.overlay(line_99C, codAder, 3, 8);
-        String progressivorecord99C = String.format("%08d", nFlussiLogici*(counterRaccomandate+2));
+        String progressivorecord99C = String.format("%08d", nFlussiLogiciDescr*(counterRaccomandate+2));
         line_99C = StringUtils.overlay(line_99C, progressivorecord99C, 12, 20);
         
         pw.print(line_99C);
@@ -282,7 +280,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         String codproglav = String.format("%06d", r.nextInt(1000000));        
         newfilename
                 .append(FILE_NAME_PRE)
-                .append(idFlusso)
+                .append(idFlussoDescr)
                 .append(".M")
                 .append(codAder)
                 .append(".D")
@@ -301,17 +299,17 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             return;
         } // if
         else {
-            logger.debug("max_num_values: " + maxNumValues.toString());
-            logger.debug("template file: \"" + templateFile + "\"");
+            logger.debug("max_num_values_descr: " + maxNumValuesDescr.toString());
+            logger.debug("template file: \"" + templateFileDescr + "\"");
             logger.debug("destination path: \"" + destinationPath + "\"");
             logger.debug("filler_char: \"" + fillerChar + "\"");
-            logger.debug("id_flusso: \"" + idFlusso + "\"");
+            logger.debug("id_flusso_descr: \"" + idFlussoDescr + "\"");
             logger.debug("cod_ader: \"" + codAder + "\"");
             logger.debug("cod_forn: \"" + codForn + "\"");
             //logger.debug("cod_prog_lav: \"" + codProgLav + "\"");
             logger.debug("date_format: \"" + dateFormat + "\"");
             logger.debug("cod_ambito: \"" + String.join(SEP_CONF, codAmbitoArr) + "\"");
-            logger.debug("tipo_modello: \"" + String.join(SEP_CONF, tipoModelloArr) + "\"");
+            logger.debug("tipo_modello_descr: \"" + String.join(SEP_CONF, tipoModelloArr) + "\"");
             logger.debug("codice_cliente: \"" + String.join(SEP_CONF, codiceClienteArr) + "\"");
             logger.debug("codice_cap: \"" + String.join(SEP_CONF, codiceCapArr) + "\"");
             logger.debug("num_lavorazione: \"" + String.join(SEP_CONF, numLavorazioneArr) + "\"");
@@ -322,7 +320,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             logger.debug("indirizzo_destinatario: \"" + String.join(SEP_CONF, indirizzoDestinatarioArr) + "\"");
             logger.debug("data_creazione_file: \"" + String.join(SEP_CONF, dataCreazioneFileArr) + "\"");
             logger.debug("numero_riferimento_dpt: \"" + String.join(SEP_CONF, numeroRiferimentoDPTArr) + "\"");
-            logger.debug("n_flussi_logici: \"" + nFlussiLogici.toString() + "\"");
+            logger.debug("n_flussi_logici_descr: \"" + nFlussiLogiciDescr.toString() + "\"");
             logger.debug("n_raccomandate: \"" + nRaccomandate.toString() + "\"");
             logger.debug("start_raccomandata: \"" + nRaccomandate.toString() + "\"");
         } // else   
@@ -334,17 +332,17 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${filler_char}")
     private String fillerChar;
 
-    @Value("${max_num_values}")
-    private Integer maxNumValues;
+    @Value("${max_num_values_descr}")
+    private Integer maxNumValuesDescr;
 
-    @Value("${template_file}")
-    private String templateFile;
+    @Value("${template_file_descr}")
+    private String templateFileDescr;
 
     @Value("${destination_path}")
     private String destinationPath;
 
-    @Value("${id_flusso}")
-    private String idFlusso;
+    @Value("${id_flusso_descr}")
+    private String idFlussoDescr;
 
     @Value("${cod_ader}")
     private String codAder;
@@ -361,11 +359,11 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${date_format_filename}")
     private String dateFormatFileName;
 
-    @Value("${cod_ambito}")
-    private String codAmbito;
+    @Value("${cod_ambito_descr}")
+    private String codAmbitoDescr;
 
-    @Value("${tipo_modello}")
-    private String tipoModello;
+    @Value("${tipo_modello_descr}")
+    private String tipoModelloDescr;
 
     @Value("${codice_cliente}")
     private String codiceCliente;
@@ -391,14 +389,14 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${indirizzo_destinatario}")
     private String indirizzoDestinatario;
 
-    @Value("${data_creazione_file}")
-    private String dataCreazioneFile;
+    @Value("${data_creazione_file_descr}")
+    private String dataCreazioneFileDescr;
 
     @Value("${numero_riferimento_dpt}")
     private String numeroRiferimentoDPT;
 
-    @Value("${n_flussi_logici}")
-    private Integer nFlussiLogici;
+    @Value("${n_flussi_logici_descr}")
+    private Integer nFlussiLogiciDescr;
 
     @Value("${n_raccomandate}")
     private Integer nRaccomandate;
