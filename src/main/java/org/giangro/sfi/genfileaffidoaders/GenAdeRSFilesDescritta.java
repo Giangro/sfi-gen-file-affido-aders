@@ -47,9 +47,9 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @PostConstruct
     void init() {
         codAmbitoArr
-                = splitElem(codAmbito);
+                = splitElem(codAmbitoDescr);
         tipoModelloArr
-                = splitElem(tipoModello);
+                = splitElem(tipoModelloDescr);
         codiceClienteArr
                 = splitElem(codiceCliente);
         codiceCapArr
@@ -67,7 +67,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         indirizzoDestinatarioArr
                 = splitElem(indirizzoDestinatario);
         dataCreazioneFileArr
-                = splitElem(dataCreazioneFile);
+                = splitElem(dataCreazioneFileDescr);
         numeroRiferimentoDPTArr
                 = splitElem(numeroRiferimentoDPT);
 
@@ -138,15 +138,15 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             } // while
 
             Random r = new Random();
-            nextRaccomandataId = 0;
+            nextRaccomandataId = startRaccomandata;
                         
             write_00C(pw, line00C);            
 
-            for (int i = 0; i < nFlussiLogici; i++) {
+            for (int i = 0; i < nFlussiLogiciDescr; i++) {
                 // incremente counter progressivo DPT 
                 counterProgressivoDPT++;      
                 // genera randomicamente codice ambito, tipo modello, ecc..
-                randomNumber = r.nextInt(maxNumValues);
+                randomNumber = r.nextInt(maxNumValuesDescr);
                 write_DPT(pw, lineDPT);
                 counterRaccomandate=0;
                 for (int j = 0; j < nRaccomandate; j++ ) {
@@ -239,7 +239,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
         String line_99C = line;
         
         line_99C = StringUtils.overlay(line_99C, codAder, 3, 8);
-        String progressivorecord99C = String.format("%08d", nFlussiLogici*(counterRaccomandate+2));
+        String progressivorecord99C = String.format("%08d", nFlussiLogiciDescr*(counterRaccomandate+2));
         line_99C = StringUtils.overlay(line_99C, progressivorecord99C, 12, 20);
         
         pw.print(line_99C);
@@ -299,7 +299,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             return;
         } // if
         else {
-            logger.debug("max_num_values: " + maxNumValues.toString());
+            logger.debug("max_num_values_descr: " + maxNumValuesDescr.toString());
             logger.debug("template file: \"" + templateFileDescr + "\"");
             logger.debug("destination path: \"" + destinationPath + "\"");
             logger.debug("filler_char: \"" + fillerChar + "\"");
@@ -309,7 +309,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             //logger.debug("cod_prog_lav: \"" + codProgLav + "\"");
             logger.debug("date_format: \"" + dateFormat + "\"");
             logger.debug("cod_ambito: \"" + String.join(SEP_CONF, codAmbitoArr) + "\"");
-            logger.debug("tipo_modello: \"" + String.join(SEP_CONF, tipoModelloArr) + "\"");
+            logger.debug("tipo_modello_descr: \"" + String.join(SEP_CONF, tipoModelloArr) + "\"");
             logger.debug("codice_cliente: \"" + String.join(SEP_CONF, codiceClienteArr) + "\"");
             logger.debug("codice_cap: \"" + String.join(SEP_CONF, codiceCapArr) + "\"");
             logger.debug("num_lavorazione: \"" + String.join(SEP_CONF, numLavorazioneArr) + "\"");
@@ -320,7 +320,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             logger.debug("indirizzo_destinatario: \"" + String.join(SEP_CONF, indirizzoDestinatarioArr) + "\"");
             logger.debug("data_creazione_file: \"" + String.join(SEP_CONF, dataCreazioneFileArr) + "\"");
             logger.debug("numero_riferimento_dpt: \"" + String.join(SEP_CONF, numeroRiferimentoDPTArr) + "\"");
-            logger.debug("n_flussi_logici: \"" + nFlussiLogici.toString() + "\"");
+            logger.debug("n_flussi_logici_descr: \"" + nFlussiLogiciDescr.toString() + "\"");
             logger.debug("n_raccomandate: \"" + nRaccomandate.toString() + "\"");
             logger.debug("start_raccomandata: \"" + nRaccomandate.toString() + "\"");
         } // else   
@@ -332,8 +332,8 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${filler_char}")
     private String fillerChar;
 
-    @Value("${max_num_values}")
-    private Integer maxNumValues;
+    @Value("${max_num_values_descr}")
+    private Integer maxNumValuesDescr;
 
     @Value("${template_file_descr}")
     private String templateFileDescr;
@@ -359,11 +359,11 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${date_format_filename}")
     private String dateFormatFileName;
 
-    @Value("${cod_ambito}")
-    private String codAmbito;
+    @Value("${cod_ambito_descr}")
+    private String codAmbitoDescr;
 
-    @Value("${tipo_modello}")
-    private String tipoModello;
+    @Value("${tipo_modello_descr}")
+    private String tipoModelloDescr;
 
     @Value("${codice_cliente}")
     private String codiceCliente;
@@ -389,14 +389,14 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
     @Value("${indirizzo_destinatario}")
     private String indirizzoDestinatario;
 
-    @Value("${data_creazione_file}")
-    private String dataCreazioneFile;
+    @Value("${data_creazione_file_descr}")
+    private String dataCreazioneFileDescr;
 
     @Value("${numero_riferimento_dpt}")
     private String numeroRiferimentoDPT;
 
-    @Value("${n_flussi_logici}")
-    private Integer nFlussiLogici;
+    @Value("${n_flussi_logici_descr}")
+    private Integer nFlussiLogiciDescr;
 
     @Value("${n_raccomandate}")
     private Integer nRaccomandate;
