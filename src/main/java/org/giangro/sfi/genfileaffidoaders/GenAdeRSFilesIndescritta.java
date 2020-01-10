@@ -309,9 +309,9 @@ public class GenAdeRSFilesIndescritta extends GenAdeRSFiles {
                 .append(codAder)
                 .append(".D")
                 .append(codForn)
-                //                .append(".D")
-                .append(".")
-                .append(getCurrentDate(dateFormat))
+                .append(".D")
+                //.append(".")
+                .append(getCurrentDate(dateFormatFileName))
                 .append(".T")
                 .append(codproglav);
         return newfilename.toString();
