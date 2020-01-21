@@ -157,6 +157,9 @@ public class GenAdeRSFilesIndescritta extends GenAdeRSFiles {
 
             Random r = new Random();
 
+            idFusione = r.nextInt(10000000);
+            idFusioneDPT = "XXX" + String.format("%07d", idFusione);
+
             write_00C(pw, line00C);
 
             for (int i = 0; i < nFlussiLogiciIndescr; i++) {
@@ -221,9 +224,9 @@ public class GenAdeRSFilesIndescritta extends GenAdeRSFiles {
         line_DPT = StringUtils.overlay(line_DPT, codAmbitoArr[randomNumber], 38, 41);
         line_DPT = StringUtils.overlay(line_DPT, tipoModelloArr[randomNumber], 41, 42);
         line_DPT = StringUtils.overlay(line_DPT, lottoTerritorialeArr[randomNumber], 42, 45);
-        idFusione = r.nextInt(10000000);
-        String idfusionedpt = "XXX" + String.format("%07d", idFusione);
-        line_DPT = StringUtils.overlay(line_DPT, idfusionedpt, 45, 55);
+        //idFusione = r.nextInt(10000000);
+        //String idfusionedpt = "XXX" + String.format("%07d", idFusione);
+        line_DPT = StringUtils.overlay(line_DPT, idFusioneDPT, 45, 55);
         line_DPT = StringUtils.overlay(line_DPT, dataPrevistaSpedizioneIndescrArr[randomNumber], 55, 63);
         line_DPT = StringUtils.overlay(line_DPT, codiceServiceStampaIndescrArr[randomNumber], 63, 68);
         line_DPT = StringUtils.overlay(line_DPT, formatoBustaIndescrArr[randomNumber], 68, 69);
@@ -492,5 +495,7 @@ public class GenAdeRSFilesIndescritta extends GenAdeRSFiles {
 
     private Integer counterFlussiLogici;
     private Integer counterBusteIndescr;
+    
+    private String idFusioneDPT;
 
 } // GenAdeRSFilesIndescritta
