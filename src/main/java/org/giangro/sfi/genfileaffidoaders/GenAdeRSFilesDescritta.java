@@ -308,6 +308,7 @@ public class GenAdeRSFilesDescritta extends GenAdeRSFiles {
             logger.debug("cod_forn: \"" + codForn + "\"");
             //logger.debug("cod_prog_lav: \"" + codProgLav + "\"");
             logger.debug("date_format: \"" + dateFormat + "\"");
+            logger.debug("date_format_filename: \"" + dateFormatFileName + "\"");
             logger.debug("cod_ambito: \"" + String.join(SEP_CONF, codAmbitoArr) + "\"");
             logger.debug("tipo_modello_descr: \"" + String.join(SEP_CONF, tipoModelloArr) + "\"");
             logger.debug("codice_cliente: \"" + String.join(SEP_CONF, codiceClienteArr) + "\"");
